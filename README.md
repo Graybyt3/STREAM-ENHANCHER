@@ -1,4 +1,4 @@
-# GRAYBYTE STREAM ENHANCER
+# 🔥 GRAYBYTE STREAM ENHANCER 🔥
 
 ![Preview](./assets/GraybyteStreamEnhancher.png)
 
@@ -17,7 +17,7 @@ It’s great for anyone who loves watching videos without hassle.
 
 ![Preview](./assets/GraybyteStreamEnhancherPopup.png)
 
-## How It Works?
+## How It Works? 🛠
 
 The extension uses some tech stuff (WebRTC and WebGL) to make videos better in real-time. Here’s the simple version:
 1. It grabs the video from the website you’re watching.
@@ -34,7 +34,7 @@ It’s light, works on Windows or Linux, and fits right into your browser.
 - A browser like Chrome, Firefox, or Edge.
 - Know a bit about adding extensions.
 
-### How to Install
+### How to Install 📥
 1. **Get the Code**:
    - Download it from GitHub:
      ```bash
@@ -42,7 +42,7 @@ It’s light, works on Windows or Linux, and fits right into your browser.
      ```
    - Or download the ZIP file and unzip it.
 
-2. **Add to Browser**:
+2. **Add to Browser**: ➕
    - **Chrome**:
      1. Go to `chrome://extensions/`.
      2. Turn on "Developer mode" (top-right switch).
@@ -55,11 +55,11 @@ It’s light, works on Windows or Linux, and fits right into your browser.
      2. Turn on "Developer mode" (sidebar switch).
      3. Click "Load unpacked" and select the `STREAM-ENHANCHER` folder.
 
-3. **Check It Works**:
+3. **Check It Works**: ✅
    - Look for the GRAYBYTE STREAM ENHANCER icon in your browser toolbar.
    - Click it to see the control panel.
 
-### How to Use
+### How to Use 🎇
 1. **Open Settings**:
    - Click the extension icon in the toolbar to see the control panel.
 2. **Play with Filters**:
@@ -74,7 +74,7 @@ It’s light, works on Windows or Linux, and fits right into your browser.
    - Look at the control panel to make sure it’s running smooth.
    - If it lags, turn down some filters.
 
-### If Something Goes Wrong
+### If Something Goes Wrong  🙅
 - **Extension Not Showing**: Check if "Developer mode" is on and you picked the right folder.
 - **Filters Not Working**: Make sure the website is supported and refresh the page.
 - **Lagging**: Lower filter settings or turn off advanced options.
