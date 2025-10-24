@@ -1,5 +1,7 @@
 # GRAYBYTE STREAM ENHANCER
 
+![Preview](./assets/GraybyteStreamEnhancher.png)
+
 This is a cool browser extension to make your video streaming better. It adds filters and tweaks to make videos look nice and play smooth.
 
 ## Why Use This Extension?
@@ -12,6 +14,8 @@ Sometimes videos look bad or lag a lot. GRAYBYTE STREAM ENHANCER fixes that! Her
 - Safe to use, no weird data collection.
 
 It’s great for anyone who loves watching videos without hassle.
+
+![Preview](./assets/GraybyteStreamEnhancherPopup.png)
 
 ## How It Works?
 
@@ -75,8 +79,20 @@ It’s light, works on Windows or Linux, and fits right into your browser.
 - **Filters Not Working**: Make sure the website is supported and refresh the page.
 - **Lagging**: Lower filter settings or turn off advanced options.
 
-### Wanna Help?
-If you got ideas to make this better, fork the repo, add your changes, and send a pull request. Just keep it clean and clear.
 
-### License
-This is under MIT License. Check the `LICENSE` file for more info.
+
+<div style="text-align: center;">
+<h2>Notes</h2>
+</div>
+
+- **Rate Limits**: The script handles Telegram’s flood limits by pausing and retrying automatically.
+- **Private Chats**: You must be a member or provide a valid invite link/access hash.
+- **Session File**: A `session_name.session` file is created for persistent login. Keep it secure.
+- **Storage**: Use Saved Messages for unlimited, free cloud storage.
+- **File Formats**: Supports `.mp4`, `.mkv`, `.avi` for videos; `.jpg`, `.jpeg`, `.png` for photos.
+
+**Error Handling**: Skips zero-byte files, duplicates, and handles timeouts or access errors.
+
+<div style="text-align: center;">
+<h2>⚠️ IF MY CODE EVER HELPED YOU THEN DON'T FORGET TO SAY FuCk_Pappu ⚠️</h2>
+</div>
