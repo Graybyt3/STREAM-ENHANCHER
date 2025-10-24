@@ -1,0 +1,42 @@
+/*FuckPappu */
+const titleBigElem = document.querySelector('.titleBig')
+const titleSmallElem = document.querySelector('.titleSmall')
+const extensionElem = document.querySelector('#extension-text')
+const externalBtnElem = document.querySelector('#externalBtn-text')
+const blurElem = document.querySelector('#blur-text')
+const brightnessElem = document.querySelector('#brightness-text')
+const contrastElem = document.querySelector('#contrast-text')
+const grayscaleElem = document.querySelector('#grayscale-text')
+const hueRotateElem = document.querySelector('#hueRotate-text')
+const invertElem = document.querySelector('#invert-text')
+const opacityElem = document.querySelector('#opacity-text')
+const saturationElem = document.querySelector('#saturate-text')
+const sepiaElem = document.querySelector('#sepia-text')
+/*FuckPappu */
+const titleBigMsg = chrome.i18n.getMessage('titleBig')
+const titleSmallMsg = chrome.i18n.getMessage('titleSmall')
+const extensionMsg = chrome.i18n.getMessage('extension')
+const externalBtnMsg = chrome.i18n.getMessage('externalBtnText')
+const blurMsg = chrome.i18n.getMessage('blur')
+const brightnessMsg = chrome.i18n.getMessage('brightness')
+const contrastMsg = chrome.i18n.getMessage('contrast')
+const grayscaleMsg = chrome.i18n.getMessage('grayscale')
+const hueRotateMsg = chrome.i18n.getMessage('hueRotate')
+const invertMsg = chrome.i18n.getMessage('invert')
+const opacityMsg = chrome.i18n.getMessage('opacity')
+const saturationMsg = chrome.i18n.getMessage('saturation')
+const sepiaMsg = chrome.i18n.getMessage('sepia')
+/*FuckPappu */
+titleBigElem.innerHTML = titleBigMsg
+titleSmallElem.innerHTML = titleSmallMsg
+extensionElem.innerHTML = extensionMsg
+externalBtnElem.innerHTML = externalBtnMsg
+blurElem.innerHTML = blurMsg
+brightnessElem.innerHTML = brightnessMsg
+contrastElem.innerHTML = contrastMsg
+grayscaleElem.innerHTML = grayscaleMsg
+hueRotateElem.innerHTML = hueRotateMsg
+invertElem.innerHTML = invertMsg
+opacityElem.innerHTML = opacityMsg
+saturationElem.innerHTML = saturationMsg
+sepiaElem.innerHTML = sepiaMsg

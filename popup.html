@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+Graybyt3 - Ex-Blackhat  | Ex Super Mod of Team_CC.
+Now securing systems as a Senior Security Expert .
+I hack servers for fun, patch them to torture you.
+
+"My life is a lie, and i'm living in this only truth.- Graybyt3"
+
+WARNING: This code is for educational and ethical purposes only.
+I am not responsible for any misuse or illegal activities.
+
+WARNING: Steal my code, and I'll call you Pappu — there's no worse shame in this world than being called Pappu.
+#FuCk_Pappu
+-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap&font-display=swap" rel="stylesheet">
+    <title>Video Filter Extension</title>
+    <link rel="stylesheet" href="popup.css">
+    <script defer src="options.js"></script>
+    <script defer src="popup.js"></script>
+    <script defer src="popupTranslate.js"></script>
+</head>
+<body class="popup">
+    <div class="container">
+        <div class="header">
+            <img src="./assets/videofilterYoutube.png" alt="icon">
+            <div class="headerTitle">
+                <h1 class="mainTitle">GRAYBYTE STREAM ENHANCHER</h1>
+                <h3 class="subTitle">No More Extra Payment For YT Premium</h3>
+            </div>
+        </div>
+        <div class="main">
+            <div class="buttonContainer">
+                <button id="reset" class="actionButton">OPTIMAL</button>
+                <button id="onOff" class="actionButton">Extension: Off</button>
+                <button id="externalBtn" class="actionButton">External Button: Off</button>
+            </div>
+            <div class="smallRangeContainer">
+                <label id="blur-text" class="label">Blur:</label>
+                <div class="rangeWrapper">
+                    <button class="rangeButton minus">-</button>
+                    <input class="rangeSlider" type="range" min="0" max="10" step="1" value="0" id="blurRange">
+                    <button class="rangeButton plus">+</button>
+                </div>
+                <div class="output" id="blurRangeOutput"></div>
+            </div>
+            <div class="smallRangeContainer">
+                <label id="brightness-text" class="label">Brightness:</label>
+                <div class="rangeWrapper">
+                    <button class="rangeButton minus">-</button>
+                    <input class="rangeSlider" type="range" min="0" max="200" step="10" value="100" id="brightnessRange">
+                    <button class="rangeButton plus">+</button>
+                </div>
+                <div class="output" id="brightnessRangeOutput"></div>
+            </div>
+            <div class="smallRangeContainer">
+                <label id="contrast-text" class="label">Contrast:</label>
+                <div class="rangeWrapper">
+                    <button class="rangeButton minus">-</button>
+                    <input class="rangeSlider" type="range" min="0" max="200" step="10" value="100" id="contrastRange">
+                    <button class="rangeButton plus">+</button>
+                </div>
+                <div class="output" id="contrastRangeOutput"></div>
+            </div>
+            <div class="smallRangeContainer">
+                <label id="grayscale-text" class="label">Grayscale:</label>
+                <div class="rangeWrapper">
+                    <button class="rangeButton minus">-</button>
+                    <input class="rangeSlider" type="range" min="0" max="100" step="10" value="0" id="grayscaleRange">
+                    <button class="rangeButton plus">+</button>
+                </div>
+                <div class="output" id="grayscaleRangeOutput"></div>
+            </div>
+            <div class="smallRangeContainer">
+                <label id="hueRotate-text" class="label">Hue-rotate:</label>
+                <div class="rangeWrapper">
+                    <button class="rangeButton minus">-</button>
+                    <input class="rangeSlider" type="range" min="0" max="360" step="10" value="0" id="hueRotateRange">
+                    <button class="rangeButton plus">+</button>
+                </div>
+                <div class="output" id="hueRotateRangeOutput"></div>
+            </div>
+            <div class="smallRangeContainer">
+                <label id="invert-text" class="label">Invert:</label>
+                <div class="rangeWrapper">
+                    <button class="rangeButton minus">-</button>
+                    <input class="rangeSlider" type="range" min="0" max="100" step="10" value="0" id="invertRange">
+                    <button class="rangeButton plus">+</button>
+                </div>
+                <div class="output" id="invertRangeOutput"></div>
+            </div>
+            <div class="smallRangeContainer">
+                <label id="opacity-text" class="label">Opacity:</label>
+                <div class="rangeWrapper">
+                    <button class="rangeButton minus">-</button>
+                    <input class="rangeSlider" type="range" min="0" max="1" step="0.1" value="1" id="opacityRange">
+                    <button class="rangeButton plus">+</button>
+                </div>
+                <div class="output" id="opacityRangeOutput"></div>
+            </div>
+            <div class="smallRangeContainer">
+                <label id="saturate-text" class="label">Saturation:</label>
+                <div class="rangeWrapper">
+                    <button class="rangeButton minus">-</button>
+                    <input class="rangeSlider" type="range" min="0" max="1000" step="10" value="100" id="saturateRange">
+                    <button class="rangeButton plus">+</button>
+                </div>
+                <div class="output" id="saturateRangeOutput"></div>
+            </div>
+            <div class="smallRangeContainer">
+                <label id="sepia-text" class="label">Sepia:</label>
+                <div class="rangeWrapper">
+                    <button class="rangeButton minus">-</button>
+                    <input class="rangeSlider" type="range" min="0" max="100" step="10" value="0" id="sepiaRange">
+                    <button class="rangeButton plus">+</button>
+                </div>
+                <div class="output" id="sepiaRangeOutput"></div>
+            </div>
+        </div>
+        <hr class="footerHr">
+        <div class="footer">
+            <div>
+                <a href="https://graybyte.host" target="_blank" rel="noopener noreferrer" aria-label="Visit Graybyte Host for more tools in a new tab">VISIT GRAYBYTE.HOST FOR MORE TOOLS</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

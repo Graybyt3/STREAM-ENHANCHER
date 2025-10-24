@@ -1,0 +1,51 @@
+/*FuckPappu */
+{
+   "blur": {
+      "message": "Blur:"
+   },
+   "brightness": {
+      "message": "Brightness:"
+   },
+   "btnText": {
+      "message": "Go to Youtube:"
+   },
+   "contrast": {
+      "message": "Contrast:"
+   },
+   "description": {
+      "message": "Enhance Your Youtube And Netflix Video Experience With Dynamic Visual Enhancements! Apply Real-time Filters And Customization. Developed Graybyt3  🖤 Ex-Blackhat | 🎩 Ex Super Mod of Team_CC | 🛡️ Senior Security Expert 💻 I hack servers for fun, patch them to torture you. 😈"
+   },
+   "extension": {
+      "message": "Extension:"
+   },
+   "externalBtnText": {
+      "message": "Youtube shortcut:"
+   },
+   "grayscale": {
+      "message": "Grayscale:"
+   },
+   "hueRotate": {
+      "message": "Hue-rotate:"
+   },
+   "invert": {
+      "message": "Invert:"
+   },
+   "name": {
+      "message": "GRAYBYTE STREAM ENHANCHER"
+   },
+   "opacity": {
+      "message": "Opacity:"
+   },
+   "saturation": {
+      "message": "Saturation:"
+   },
+   "sepia": {
+      "message": "Sepia:"
+   },
+   "titleBig": {
+      "message": "GRAYBYTE STREAM ENHANCHER"
+   },
+   "titleSmall": {
+      "message": "No More Extra Payment For YT Premium"
+   }
+}

@@ -1,0 +1,45 @@
+/*
+Graybyt3 - Ex-Blackhat  | Ex Super Mod of Team_CC.
+Now securing systems as a Senior Security Expert .
+I hack servers for fun, patch them to torture you.
+
+"My life is a lie, and i'm living in this only truth.- Graybyt3"
+
+WARNING: This code is for educational and ethical purposes only.
+I am not responsible for any misuse or illegal activities.
+
+WARNING: Steal my code, and I'll call you Pappu — there's no worse shame in this world than being called Pappu.
+#FuCk_Pappu
+*/
+
+{
+   "action": {
+      "default_icon": "./assets/videofilterYoutube.png",
+      "default_popup": "popup.html"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "css": [ "contentAll.css" ],
+      "js": [ "options.js", "content.js", "contentAll.js" ],
+      "matches": [ "https://*/*" ]
+   } ],
+   "default_locale": "en",
+   "description": "__MSG_description__",
+   "host_permissions": [ "https://*/*" ],
+   "icons": {
+      "128": "./assets/videofilterYoutube.png"
+   },
+   "manifest_version": 3,
+   "name": "__MSG_name__",
+   "permissions": [ "storage" ],
+   "update_url": "https://github.com/Graybyt3/STREAM-ENHANCHER",
+   "version": "0.0.1",
+   "web_accessible_resources": [ {
+      "matches": [ "https://*/*" ],
+/*Edit Here If You Do Not Want To Extention To Run On All Sites Rather In Specific Sites - Or You Can Specify From Extention Settings Page If Do Not Want To Touch Code Manually */
+
+      "resources": [ "assets/videofilterYoutube.png" ]
+   } ]
+}
