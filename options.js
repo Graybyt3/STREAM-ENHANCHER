@@ -1,11 +1,11 @@
 /*FuckPappu */
 async function loadOptionsOrSetDefaults() {
     return new Promise((resolve, reject) => {
-        chrome.storage.sync.get('filterOptionsN', async(item) => {
+        chrome.storage.sync.get('filterOptionsN', async (item) => {
             if (chrome.runtime.lastError) {
                 return reject(chrome.runtime.lastError)
             }
-            filterOptionsN = item?.filterOptionsN
+            let filterOptionsN = item?.filterOptionsN
             if (!filterOptionsN) {
                 filterOptionsN = {
                     "extensionOn": true,
@@ -18,7 +18,8 @@ async function loadOptionsOrSetDefaults() {
                     "opacity": 1,
                     "saturation": 120,
                     "sepia": 0,
-                    "externalBtn": false
+                    "externalBtn": false,
+                    "lastVolume": 0.5
                 }
                 chrome.storage.sync.set({
                     'filterOptionsN': filterOptionsN
