@@ -1,5 +1,4 @@
 const MAX_TRIES_MONITOR_SKIP = 10
-let prevText = ''
 let options
 let isMonitorActive = false
 let attachedVideos = new Set()
@@ -8,7 +7,7 @@ async function initContent() {
     options = await loadOptionsOrSetDefaults()
     startMonitoringForVideo(0)
 }
-
+/*FuckPappu */
 initContent()
 
 chrome.storage.onChanged.addListener(
@@ -41,11 +40,12 @@ function startMonitoringForVideo(numTries) {
         }, 100 * numTries)
     }
 }
-/*FuckPappu */
+
 function adjustVideo() {
     let videos = document.querySelectorAll('video')
     if (videos.length > 0) {
         videos.forEach(video => {
+ 
             if (!options.extensionOn) {
                 video.style.filter = ''
             } else {
@@ -62,6 +62,13 @@ function adjustVideo() {
                 `
             }
 
+          
+            setTimeout(() => {
+                if (video.volume !== options.lastVolume) {
+                    video.volume = options.lastVolume
+                }
+            }, 100)  // 100ms delay for last sound apply
+
             if (!attachedVideos.has(video)) {
                 video.addEventListener('wheel', handleVolumeWheel, { passive: false })
                 attachedVideos.add(video)
@@ -69,21 +76,25 @@ function adjustVideo() {
         })
     }
 }
-/*FuckPappu */
+
 function handleVolumeWheel(e) {
-    e.preventDefault() 
+    e.preventDefault()
     e.stopPropagation()
 
     const delta = e.deltaY
-    let step = 0.10 
+    const step = 0.05  // 5% per notch
 
+    let newVolume
     if (delta > 0) {
-        this.volume = Math.max(0, this.volume - step)
+        newVolume = Math.max(0, this.volume - step)
     } else if (delta < 0) {
-        this.volume = Math.min(1, this.volume + step)
+        newVolume = Math.min(1, this.volume + step)
     }
 
-    // Optional: Brief visual feedback (e.g., show native controls temporarily)
-    // this.controls = true
-    // setTimeout(() => { this.controls = false }, 1500)
+    this.volume = newVolume
+    if (options.lastVolume !== newVolume) {
+        options.lastVolume = newVolume
+        chrome.storage.sync.set({ 'filterOptionsN': options })
+    }
 }
+/*FuckPappu */
