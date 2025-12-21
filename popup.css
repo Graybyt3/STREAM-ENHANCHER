@@ -1,248 +1,89 @@
-* {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Play', sans-serif !important;
-    color: #FFFFFF !important;
+const MAX_TRIES_MONITOR_SKIP = 10
+let prevText = ''
+let options
+let isMonitorActive = false
+let attachedVideos = new Set()
+
+async function initContent() {
+    options = await loadOptionsOrSetDefaults()
+    startMonitoringForVideo(0)
 }
 
-body.popup {
-    width: 685px;
-    height: 555px;
-    background: linear-gradient(135deg, #0a0a1f 0%, #1c0b2b 70%);
-    background-image: url('assets/back.jpg');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1px;
-    position: relative;
-    overflow: hidden;
-}
+initContent()
 
-body.popup::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(0, 255, 204, 0.1) 0%, transparent 70%);
-    animation: pulseBG 0.3s infinite ease-in-out;
-    z-index: -1;
-}
+chrome.storage.onChanged.addListener(
+    (changes, areaName) => {
+        if (areaName === 'sync' && changes.filterOptionsN?.newValue) {
+            options = changes.filterOptionsN.newValue
+            adjustVideo()
+        }
+    }
+)
 
-.container {
-    padding: 1px;
-    background: rgba(10, 10, 31, 0.9);
-    border: 1px solid #ff00ff;
-    border-radius: 20px;
-    box-shadow: 0 0 12px rgba(255, 0, 255, 0.5), 0 0 20px rgba(0, 255, 204, 0.3);
-    width: 95%;
-}
+function startMonitoringForVideo(numTries) {
+    numTries++
+    const monitor = new MutationObserver(() => {
+        adjustVideo()
+    })
 
-.header {
-    background: rgba(10, 10, 31, 0);
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 12px;
-}
-
-.header img {
-    width: 70px;
-    height: 70px;
-    opacity: 1;
-}
-
-.headerTitle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-grow: 1;
-}
-
-.mainTitle {
-    font-size: 1.7em;
-    font-weight: 600;
-    color: #ff00ff !important;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-align: center;
-}
-
-.subTitle {
-    font-size: 1.1em;
-    font-weight: 600;
-    color: #FFFFFF !important;
-}
-
-.main {
-    margin-top: 10px;
-    padding-bottom: 10px;
-}
-
-.buttonContainer {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    margin: 8px 12px;
-    height: 38px;
-}
-
-.actionButton {
-    padding: 4px 10px;
-    font-size: 1.5em;
-    font-weight: 500;
-    color: #FFFFFF !important;
-    background: #040321;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 0 8px rgba(0, 255, 204, 0.7), 0 0 12px rgba(255, 0, 255, 0.5);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.actionButton:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(0, 255, 204, 0.9), 0 0 20px rgba(255, 0, 255, 0.7);
-}
-
-.actionButton.active {
-    background: #021F06;
-}
-
-.actionButton::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.5s ease, height 1.0s ease;
-}
-
-.actionButton:hover::before {
-    width: 150px;
-    height: 150px;
+    let reactEntry = document.querySelector("body")
+    if (reactEntry && !isMonitorActive) {
+        monitor.observe(reactEntry, {
+            attributes: false,
+            childList: true,
+            subtree: true,
+        })
+        isMonitorActive = true
+    } else {
+        if (numTries > MAX_TRIES_MONITOR_SKIP) { return }
+        setTimeout(() => {
+            startMonitoringForVideo(numTries)
+        }, 100 * numTries)
+    }
 }
 /*FuckPappu */
-.smallRangeContainer {
-    height: 30px;
-    margin: 5px 10px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+function adjustVideo() {
+    let videos = document.querySelectorAll('video')
+    if (videos.length > 0) {
+        videos.forEach(video => {
+            if (!options.extensionOn) {
+                video.style.filter = ''
+            } else {
+                video.style.filter = `
+                    blur(${options.blur}px) 
+                    brightness(${options.brightness}%) 
+                    contrast(${options.contrast}%) 
+                    grayscale(${options.grayScale}%)
+                    hue-rotate(${options.hueRotate}deg)
+                    invert(${options.invert}%)
+                    opacity(${options.opacity})
+                    saturate(${options.saturation}%)
+                    sepia(${options.sepia}%)
+                `
+            }
 
-.smallRangeContainer label {
-    width: 80px;
-    font-size: 1.5em;
-    font-weight: 500;
-    color: #FFFFFF !important;
-}
-
-.rangeWrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.rangeButton {
-    width: 18px;
-    height: 18px;
-    background: #040321;
-    color: #FFFFFF !important;
-    font-size: 14px;
-    font-weight: 500;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    line-height: 15px;
-    text-align: center;
-    transition: all 0.3s ease;
+            if (!attachedVideos.has(video)) {
+                video.addEventListener('wheel', handleVolumeWheel, { passive: false })
+                attachedVideos.add(video)
+            }
+        })
+    }
 }
 /*FuckPappu */
-.rangeButton:hover {
-    background: #FFFFFF;
-}
-/*FuckPappu */
-.rangeSlider {
-    cursor: pointer;
-    width: 350px;
-    height: 6px;
-    background: linear-gradient(90deg, #ff00ff, #00ffcc 50%, #4D4D4D 50%);
-    border-radius: 20px;
-    appearance: none;
-    overflow: visible;
-    box-shadow: 0 0 6px rgba(255, 0, 255, 0.5);
-}
+function handleVolumeWheel(e) {
+    e.preventDefault() 
+    e.stopPropagation()
 
-.rangeSlider::-webkit-slider-thumb {
-    appearance: none;
-    width: 15px;
-    height: 10px;
-    margin: -6px 0;
-    border-radius: 50%;
-    background: #FFFFFF;
-    background-position: center;
-    background-size: cover;
-}
+    const delta = e.deltaY
+    let step = 0.05 
 
-.output {
-    font-size: 1.5em;
-    color: #FFFFFF !important;
-    margin-left: 0;
-    width: 35px;
-    text-align: end;
-}
+    if (delta > 0) {
+        this.volume = Math.max(0, this.volume - step)
+    } else if (delta < 0) {
+        this.volume = Math.min(1, this.volume + step)
+    }
 
-.footerHr {
-    width: 100%;
-    border: 1px solid #ff00ff;
-    opacity: 0.3;
+    // Optional: Brief visual feedback (e.g., show native controls temporarily)
+    // this.controls = true
+    // setTimeout(() => { this.controls = false }, 1500)
 }
-
-.footer {
-    height: 40px;
-    font-size: 1.5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 12px;
-}
-
-.footer a {
-    color: #FFFFFF !important;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.footer a:hover {
-    text-shadow: none;
-}
-
-@keyframes liveGlow {
-    0% { text-shadow: none; }
-    50% { text-shadow: none; }
-    100% { text-shadow: none; }
-}
-
-@keyframes pulseBG {
-    0% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.1); opacity: 0.6; }
-    100% { transform: scale(1); opacity: 0.4; }
-}
-/*FuckPappu */
