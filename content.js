@@ -2,12 +2,13 @@ const MAX_TRIES_MONITOR_SKIP = 10
 let prevText = ''
 let options
 let isMonitorActive = false
+let attachedVideos = new Set()
 
 async function initContent() {
     options = await loadOptionsOrSetDefaults()
     startMonitoringForVideo(0)
 }
-/*FuckPappu */
+
 initContent()
 
 chrome.storage.onChanged.addListener(
@@ -40,7 +41,7 @@ function startMonitoringForVideo(numTries) {
         }, 100 * numTries)
     }
 }
-
+/*FuckPappu */
 function adjustVideo() {
     let videos = document.querySelectorAll('video')
     if (videos.length > 0) {
@@ -60,7 +61,29 @@ function adjustVideo() {
                     sepia(${options.sepia}%)
                 `
             }
+
+            if (!attachedVideos.has(video)) {
+                video.addEventListener('wheel', handleVolumeWheel, { passive: false })
+                attachedVideos.add(video)
+            }
         })
     }
 }
 /*FuckPappu */
+function handleVolumeWheel(e) {
+    e.preventDefault() 
+    e.stopPropagation()
+
+    const delta = e.deltaY
+    let step = 0.10 
+
+    if (delta > 0) {
+        this.volume = Math.max(0, this.volume - step)
+    } else if (delta < 0) {
+        this.volume = Math.min(1, this.volume + step)
+    }
+
+    // Optional: Brief visual feedback (e.g., show native controls temporarily)
+    // this.controls = true
+    // setTimeout(() => { this.controls = false }, 1500)
+}
