@@ -1,100 +1,110 @@
-const MAX_TRIES_MONITOR_SKIP = 10
-let options
-let isMonitorActive = false
-let attachedVideos = new Set()
+/*FuckPappu */
+// Mouse Wheel Volume Control With Youtube UI Sync
+let options;
+let isMonitorActive = false;
+const attachedVideos = new WeakSet();
+
+const MAX_TRIES_MONITOR_SKIP = 10;
 
 async function initContent() {
-    options = await loadOptionsOrSetDefaults()
-    startMonitoringForVideo(0)
+    options = await loadOptionsOrSetDefaults();
+    startMonitoringForVideo(0);
 }
-/*FuckPappu */
-initContent()
 
-chrome.storage.onChanged.addListener(
-    (changes, areaName) => {
-        if (areaName === 'sync' && changes.filterOptionsN?.newValue) {
-            options = changes.filterOptionsN.newValue
-            adjustVideo()
-        }
+initContent();
+
+chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName === 'sync' && changes.filterOptionsN?.newValue) {
+        options = changes.filterOptionsN.newValue;
+        adjustVideo();
     }
-)
+});
 
 function startMonitoringForVideo(numTries) {
-    numTries++
-    const monitor = new MutationObserver(() => {
-        adjustVideo()
-    })
+    numTries++;
+    const observer = new MutationObserver(adjustVideo);
 
-    let reactEntry = document.querySelector("body")
-    if (reactEntry && !isMonitorActive) {
-        monitor.observe(reactEntry, {
-            attributes: false,
+    const body = document.querySelector("body");
+    if (body && !isMonitorActive) {
+        observer.observe(body, {
             childList: true,
-            subtree: true,
-        })
-        isMonitorActive = true
+            subtree: true
+        });
+        isMonitorActive = true;
     } else {
-        if (numTries > MAX_TRIES_MONITOR_SKIP) { return }
-        setTimeout(() => {
-            startMonitoringForVideo(numTries)
-        }, 100 * numTries)
+        if (numTries > MAX_TRIES_MONITOR_SKIP) return;
+        setTimeout(() => startMonitoringForVideo(numTries), 100 * numTries);
     }
 }
-
+/*FuckPappu */
 function adjustVideo() {
-    let videos = document.querySelectorAll('video')
-    if (videos.length > 0) {
-        videos.forEach(video => {
- 
-            if (!options.extensionOn) {
-                video.style.filter = ''
-            } else {
-                video.style.filter = `
-                    blur(${options.blur}px) 
-                    brightness(${options.brightness}%) 
-                    contrast(${options.contrast}%) 
-                    grayscale(${options.grayScale}%)
-                    hue-rotate(${options.hueRotate}deg)
-                    invert(${options.invert}%)
-                    opacity(${options.opacity})
-                    saturate(${options.saturation}%)
-                    sepia(${options.sepia}%)
-                `
-            }
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+        if (!options?.extensionOn) {
+            video.style.filter = '';
+        } else {
+            video.style.filter = `
+                blur(${options.blur || 0}px)
+                brightness(${options.brightness || 100}%)
+                contrast(${options.contrast || 100}%)
+                grayscale(${options.grayScale || 0}%)
+                hue-rotate(${options.hueRotate || 0}deg)
+                invert(${options.invert || 0}%)
+                opacity(${options.opacity ?? 1})
+                saturate(${options.saturation || 100}%)
+                sepia(${options.sepia || 0}%)
+            `;
+        }
 
-          
-            setTimeout(() => {
-                if (video.volume !== options.lastVolume) {
-                    video.volume = options.lastVolume
-                }
-            }, 100)  // 100ms delay for last sound apply
-
-            if (!attachedVideos.has(video)) {
-                video.addEventListener('wheel', handleVolumeWheel, { passive: false })
-                attachedVideos.add(video)
-            }
-        })
-    }
+        
+        if (!attachedVideos.has(video)) {
+            video.addEventListener('wheel', handleWheelVolume, { passive: false });
+            attachedVideos.add(video);
+        }
+    });
 }
 
-function handleVolumeWheel(e) {
-    e.preventDefault()
-    e.stopPropagation()
+function handleWheelVolume(e) {
+    if (e.target !== this && !this.contains(e.target)) return;
 
-    const delta = e.deltaY
-    const step = 0.05  // 5% per notch
+    e.preventDefault();
+    e.stopPropagation();
 
-    let newVolume
-    if (delta > 0) {
-        newVolume = Math.max(0, this.volume - step)
-    } else if (delta < 0) {
-        newVolume = Math.min(1, this.volume + step)
-    }
+    const delta = Math.sign(e.deltaY);
+    if (delta === 0) return;
 
-    this.volume = newVolume
-    if (options.lastVolume !== newVolume) {
-        options.lastVolume = newVolume
-        chrome.storage.sync.set({ 'filterOptionsN': options })
-    }
+    const step = 0.04; // 4% per scroll tick
+    const newVolume = Math.max(0, Math.min(1, this.volume - delta * step));
+
+    
+    this.volume = newVolume;
+
+    const volumePercent = Math.round(newVolume * 100);
+    
+    const code = `
+        (function() {
+            const player = document.querySelector('.html5-video-player');
+            if (player?.setVolume) {
+                player.setVolume(${volumePercent});
+                // Extra force sync for stubborn cases
+                setTimeout(() => player.setVolume(${volumePercent}), 40);
+                setTimeout(() => player.setVolume(${volumePercent}), 150);
+            }
+        })();
+    `;
+
+    const script = document.createElement('script');
+    script.textContent = code;
+    (document.head || document.documentElement).appendChild(script);
+    script.remove();
 }
+
+setInterval(() => {
+    document.querySelectorAll('video').forEach(video => {
+        if (!attachedVideos.has(video)) {
+            video.addEventListener('wheel', handleWheelVolume, { passive: false });
+            attachedVideos.add(video);
+        }
+    });
+}, 2000);
 /*FuckPappu */
